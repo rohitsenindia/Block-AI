@@ -1,7 +1,20 @@
 {
+  "name": "block-ai",
+  "version": "1.0.0",
+  "description": "Blockchain AI integration using Gemini API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"No tests specified\"",
+    "docs": "echo \"Documentation generation\"",
+    "automate": "node src/automation.js"
+  },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
-    "@huggingface/inference": "^4.9.0",
-    "dotenv": "^17.2.2"
-  }
+    "@google/generative-ai": "^0.2.1",
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": ["blockchain", "ai", "gemini", "automation"],
+  "author": "rohitsenindia",
+  "license": "MIT"
 }

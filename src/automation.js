@@ -6,7 +6,9 @@ const fs = require('fs');
 class GitHubAutomation {
     constructor() {
         this.geminiApiKey = process.env.GEMINI_API_KEY;
-        // No error thrown if API key missing - we use fallbacks
+        if (!this.geminiApiKey || this.geminiApiKey === 'your_gemini_api_key_here') {
+            throw new Error('Please set GEMINI_API_KEY in .env file');
+        }
         this.commitGenerator = new CommitGenerator(this.geminiApiKey);
     }
 
@@ -25,7 +27,7 @@ class GitHubAutomation {
             // Generate meaningful changes
             const changedFile = await this.commitGenerator.createMeaningfulChange();
             
-            // Generate commit message (will use fallback if API fails)
+            // Generate AI-powered commit message
             const commitMessage = await this.commitGenerator.gemini.generateCommitMessage();
             console.log('📝 Commit message:', commitMessage);
 
@@ -62,6 +64,13 @@ class GitHubAutomation {
         logs.push(logEntry);
         fs.writeFileSync('automation-log.json', JSON.stringify(logs, null, 2));
     }
+}
+
+// Check if .env exists, if not create from example
+if (!fs.existsSync('.env') && fs.existsSync('.env.example')) {
+    fs.copyFileSync('.env.example', '.env');
+    console.log('⚠️  Please edit .env file with your actual API keys!');
+    process.exit(1);
 }
 
 // Run the automation

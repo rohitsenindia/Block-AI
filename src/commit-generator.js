@@ -3,20 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 class CommitGenerator {
-    constructor(apiKey) {
-        this.gemini = new GeminiHelper(apiKey);
+    constructor(geminiApiKey) {
+        this.gemini = new GeminiHelper(geminiApiKey);
     }
 
     async createMeaningfulChange() {
         const files = [
-            'src/utils/blockchain.js',
-            'src/ai/helpers.js', 
-            'docs/features.md',
-            'examples/usage.js',
-            'src/integration/web3.js',
+            'src/utils/helpers.js',
+            'src/config/settings.js', 
+            'docs/usage.md',
+            'examples/demo.js',
+            'src/features/blockchain.js',
             'docs/api.md',
-            'src/utils/logger.js',
-            'src/automation/tasks.js'
+            'src/utils/logger.js'
         ];
         
         const targetFile = files[Math.floor(Math.random() * files.length)];
@@ -27,26 +26,118 @@ class CommitGenerator {
             fs.mkdirSync(dir, { recursive: true });
         }
 
-        const content = this.generateFileContent(targetFile);
+        const content = await this.generateFileContent(targetFile);
         fs.writeFileSync(targetFile, content);
         
         console.log(`Created/updated: ${targetFile}`);
         return targetFile;
     }
 
-    generateFileContent(filename) {
+    async generateFileContent(filename) {
         const timestamp = new Date().toISOString();
         
         const baseContent = {
-            'src/utils/blockchain.js': `// Blockchain utilities for AI integration
+            'src/utils/helpers.js': `// Utility functions for Block AI
+// Generated: ${timestamp}
+// Auto-generated utility functions
+
+module.exports = {
+    formatResponse: (data) => {
+        return JSON.stringify(data, null, 2);
+    },
+    
+    validateInput: (input) => {
+        return typeof input === 'string' && input.length > 0;
+    },
+    
+    logActivity: (message) => {
+        console.log(\`[\${new Date().toISOString()}] \${message}\`);
+    },
+    
+    generateTimestamp: () => {
+        return new Date().toISOString();
+    }
+};`,
+
+            'src/config/settings.js': `// Configuration settings for Block AI
+// Updated: ${timestamp}
+
+module.exports = {
+    apiSettings: {
+        timeout: 30000,
+        maxRetries: 3,
+        version: '1.0.0'
+    },
+    
+    aiSettings: {
+        model: 'gemini-pro',
+        temperature: 0.7,
+        maxTokens: 1000
+    },
+    
+    blockchainSettings: {
+        network: 'mainnet',
+        gasLimit: 21000
+    }
+};`,
+
+            'docs/usage.md': `# Block AI Usage Guide
+## Last Updated: ${timestamp}
+
+## Installation
+\`\`\`bash
+npm install
+\`\`\`
+
+## Basic Usage
+\`\`\`javascript
+const GeminiHelper = require('./src/gemini-helper');
+const helper = new GeminiHelper(process.env.GEMINI_API_KEY);
+\`\`\`
+
+## Features
+- AI-powered code analysis
+- Automated documentation
+- Blockchain integration helpers
+`,
+
+            'examples/demo.js': `// Block AI Demo Script
 // Generated: ${timestamp}
 
-class BlockchainUtils {
-    static validateAddress(address) {
+const GeminiHelper = require('../src/gemini-helper');
+require('dotenv').config();
+
+async function demo() {
+    const helper = new GeminiHelper(process.env.GEMINI_API_KEY);
+    
+    try {
+        const response = await helper.generateAIContent(
+            "Explain blockchain AI integration in simple terms"
+        );
+        
+        console.log('AI Response:', response);
+    } catch (error) {
+        console.error('Demo error:', error);
+    }
+}
+
+// demo(); // Uncomment to run demo
+module.exports = { demo };
+`,
+
+            'src/features/blockchain.js': `// Blockchain integration features
+// Updated: ${timestamp}
+
+class BlockchainHelper {
+    constructor() {
+        this.network = 'mainnet';
+    }
+    
+    validateAddress(address) {
         return /^0x[a-fA-F0-9]{40}$/.test(address);
     }
     
-    static formatTransaction(tx) {
+    formatTransaction(tx) {
         return {
             hash: tx.hash,
             from: tx.from,
@@ -55,92 +146,53 @@ class BlockchainUtils {
             timestamp: new Date().toISOString()
         };
     }
-    
-    static generateId() {
-        return '0x' + Math.random().toString(16).substr(2, 40);
-    }
 }
 
-module.exports = BlockchainUtils;`,
+module.exports = BlockchainHelper;
+`,
 
-            'src/ai/helpers.js': `// AI helper functions
-// Updated: ${timestamp}
+            'docs/api.md': `# Block AI API Reference
+## Updated: ${timestamp}
 
-class AIHelpers {
-    static processResponse(response) {
-        return response.trim().toLowerCase();
-    }
-    
-    static validateInput(input) {
-        return typeof input === 'string' && input.length > 0;
-    }
-    
-    static formatOutput(data) {
-        return JSON.stringify(data, null, 2);
-    }
-}
+## GeminiHelper Class
 
-module.exports = AIHelpers;`,
+### constructor(apiKey)
+Initialize with Gemini API key.
 
-            'docs/features.md': `# Block AI Features
-## Last Updated: ${timestamp}
+### generateAIContent(prompt)
+Generate AI content from prompt.
 
-## Core Features
-- AI-powered commit generation
-- Blockchain integration
-- Automated code updates
-- Smart documentation
+### analyzeCode(codeSnippet)
+Analyze code and provide insights.
+`,
 
-## AI Models
-- Hugging Face Integration
-- Multiple model support
-- Fallback mechanisms`,
-
-            'examples/usage.js': `// Usage examples for Block AI
+            'src/utils/logger.js': `// Logger utility for Block AI
 // Generated: ${timestamp}
 
-const BlockchainUtils = require('../src/utils/blockchain');
-const AIHelpers = require('../src/ai/helpers');
-
-// Example usage
-const address = '0x742d35Cc6634C0532925a3b8Dc9F1a';
-console.log('Valid address:', BlockchainUtils.validateAddress(address));
-
-module.exports = { BlockchainUtils, AIHelpers };`,
-
-            'src/integration/web3.js': `// Web3 integration helpers
-// Updated: ${timestamp}
-
-class Web3Integration {
-    constructor(provider) {
-        this.provider = provider;
+class Logger {
+    static log(level, message) {
+        const timestamp = new Date().toISOString();
+        console.log(\`[\${timestamp}] [\${level.toUpperCase()}] \${message}\`);
     }
     
-    async getBalance(address) {
-        // Mock implementation
-        return Math.random() * 100;
+    static info(message) {
+        this.log('info', message);
+    }
+    
+    static error(message) {
+        this.log('error', message);
+    }
+    
+    static warn(message) {
+        this.log('warn', message);
     }
 }
 
-module.exports = Web3Integration;`,
-
-            'src/automation/tasks.js': `// Automation tasks
-// Generated: ${timestamp}
-
-class AutomationTasks {
-    static scheduleTask(task, interval) {
-        return setInterval(task, interval);
-    }
-    
-    static validateSchedule(schedule) {
-        return schedule > 0;
-    }
-}
-
-module.exports = AutomationTasks;`
+module.exports = Logger;
+`
         };
 
-        return baseContent[filename] || `// ${filename}\n// Auto-generated: ${timestamp}\n// Block AI automation system\n`;
+        return baseContent[filename] || `// ${filename}\n// Auto-generated: ${timestamp}\n// This file was automatically generated by Block AI automation.\n`;
     }
 }
 
