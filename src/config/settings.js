@@ -1,5 +1,5 @@
 // Configuration settings for Block AI
-// Updated: 2025-10-11T12:33:43.963Z
+// Updated: 2025-10-13T20:33:44.338Z
 
 module.exports = {
     apiSettings: {
