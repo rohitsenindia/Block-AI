@@ -1,5 +1,5 @@
 # Block AI Usage Guide
-## Last Updated: 2025-10-18T14:13:21.622Z
+## Last Updated: 2025-10-25T22:13:23.357Z
 
 ## Installation
 ```bash
