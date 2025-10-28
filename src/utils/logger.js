@@ -1,5 +1,5 @@
 // Logger utility for Block AI
-// Generated: 2025-10-26T14:13:23.569Z
+// Generated: 2025-10-28T14:13:24.042Z
 
 class Logger {
     static log(level, message) {
