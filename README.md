@@ -146,10 +146,4 @@ This project is licensed under the **MIT License** — feel free to use and modi
 
 **Author:** [Rohit Sen](https://github.com/rohitsenindia)  
 **Project:** [Block-AI](https://github.com/rohitsenindia/Block-AI)  
-**Twitter:** [@rohitsenindia](https://twitter.com/rohitsenindia)
-
----
-
-### 🌟 Support the Project
-
-If you like this project, give it a ⭐ on GitHub and share it with other builders in the Web3 + AI space!
+**Twitter:** [@rohitsenindia](https://x.com/ask_rohitsen)
