@@ -146,4 +146,4 @@ This project is licensed under the **MIT License** — feel free to use and modi
 
 **Author:** [Rohit Sen](https://github.com/rohitsenindia)  
 **Project:** [Block-AI](https://github.com/rohitsenindia/Block-AI)  
-**Twitter:** [@rohitsenindia](https://x.com/ask_rohitsen)
+**Twitter:** [@ask_rohitsen](https://x.com/ask_rohitsen)
